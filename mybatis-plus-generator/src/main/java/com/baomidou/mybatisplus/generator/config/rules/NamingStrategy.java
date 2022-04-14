@@ -29,16 +29,35 @@ import java.util.Set;
  * @since 2016/8/30
  */
 public enum NamingStrategy {
-
     /**
      * 不做任何改变，原样输出
      */
-    no_change,
+    no_change {
+        @Override
+        public String converter(String name) {
+            return name;
+        }
+    },
 
     /**
      * 下划线转驼峰命名
      */
-    underline_to_camel;
+    underline_to_camel {
+        @Override
+        public String converter(String name) {
+            return NamingStrategy.underlineToCamel(name);
+        }
+    },
+
+    active_record_pattern {
+        @Override
+        public String converter(String name) {
+            return Inflector.recordlize(name);
+        }
+    };
+
+
+    public abstract String converter(String name);
 
     /**
      * 下划线转驼峰

@@ -86,11 +86,8 @@ public interface INameConvert {
             if (StringUtils.isBlank(propertyName)) {
                 throw new RuntimeException(String.format("%s 的名称转换结果为空，请检查是否配置问题", name));
             }
-            // 下划线转驼峰
-            if (NamingStrategy.underline_to_camel.equals(strategy)) {
-                return NamingStrategy.underlineToCamel(propertyName);
-            }
-            return propertyName;
+
+            return strategy.converter(propertyName);
         }
     }
 }
